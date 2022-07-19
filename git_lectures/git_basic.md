@@ -116,27 +116,74 @@ Merge commit은 수정내역이 없음.
 - `git log --oneline -- mnist/` 
     - 특정 폴더를 기준으로 소스 수정내역(commit) 리스트 확인하기 
 
-## 2020년 1월 부터 2020년 6월 30일까지 소스 수정내역(commit) 리스트 확인
-`git log --oneline --after=2020-01-01 --before=2020-06-30`
+## 특정 날짜의 소스파일 수정내역(commit) 리스트
 
-## 2020년 1월 부터 2020년 6월 30일까지 mnist 폴더 소스 수정내역(commit) 리스트 확인
-`git log --oneline --after=2020-01-01 --before=2020-06-30 --mnist`
+- 2020년 1월 부터 2020년 6월 30일까지 소스 수정내역(commit) 리스트 확인
+    - `git log --oneline --after=2020-01-01 --before=2020-06-30`
+-  2020년 1월 부터 2020년 6월 30일까지 mnist 폴더 소스 수정내역(commit) 리스트 확인
+    - `git log --oneline --after=2020-01-01 --before=2020-06-30 --mnist`
+- 2020년 6월 한달간 소스 수정내역(commit) 개수
+    - `git log --oneline --after=2020-06-01 --before=2020-06-30 | wc -l`
+- 소스파일 수정내역(commit) 옛날 것부터 살펴보기
+    - `git log --reverse`
+- 소스파일 수정내역(commit) 최신 것부터 3개 살펴보기
+    - `git log --oneline -3`
+- 소스파일 수정내역(commit) 옛날 것부터 3개 살펴보기
+    > 흔히하는 실수!
+    > `git log --oneline --reverse -3`
+    > 
+    > `-3` 먼저 적용이 되기 때문에 위 코드는 그냥 최신 커밋 3개를 reverse한 값을 프린트한다.
+    - 따라서, `git log --oneline --reverse | head -3` 라고 입력해야한다.
 
-## 2020년 6월 한달간 소스 수정내역(commit) 개수
-`git log --oneline --after=2020-06-01 --before=2020-06-30 | wc -l`
+## Git Config
 
-## 소스파일 수정내역(commit) 옛날 것부터 살펴보기
-`git log --reverse`
+### GitHub ID/PW 캐싱데이터 삭제 (삭제시 문제없음)
+다른(사람) GitHub 계정과의 충돌방지
 
-## 소스파일 수정내역(commit) 최신 것부터 3개 살펴보기
-`git log --oneline -3`
+`git config --global --unset credential.helper`
+`git config --system --unset credential.helper`
 
-## 소스파일 수정내역(commit) 옛날 것부터 3개 살펴보기
+### GitHub 계정 이메일 주소 및 본인영문이름
+차후 소스코드 파일수정 내역(commit) 저자(author)정보  
 
-> 흔히하는 실수!
->
-> `git log --oneline --reverse -3`
-> 
-> `-3` 먼저 적용이 되기 때문에 위 코드는 그냥 최신 커밋 3개를 reverse한 값을 프린트한다.
+`git config --global user.email "본인메일적으세요"`
+`git config --global user.name "본인이름적으세요"`
 
-따라서, `git log --oneline --reverse | head -3` 라고 입력해야한다.
+### Git 설정내용 확인하기
+`git config --list`
+
+## Git branch & commit
+
+### Branch 생성
+작업내용을 대표하는 키워드로 Branch 명 생성추천
+
+`git checkout -b fix-mnist`
+
+### Branch 이동
+`git checkout fix-mnist`
+
+### Branch 삭제
+`git branch -D fix-mnist`
+
+### 브랜치를 굳이 왜 사용할까?
+1. 원본을 유지하기 위해서
+2. 압축파일을 따로 저장 안해도 된다
+3. 다른 폴더로 복사해서 작업 안해도 된다
+
+### 브랜치 명칭은 무엇으로 하는게 좋을까?
+"내가 작업할려고 하는 내용의 요약단어"
+
+브랜치 운영방법 => git flow => 관리자 입장
+
+프로젝트 관리자 vs 프로젝트 참여자
+
+
+
+### 현재 소스파일 상태(status) 확인하기
+`git status`
+
+### 소스 파일 수정한 내용 확인하기
+`git diff`
+
+### 내가 작성한 commit 확인하기
+`git show`
